@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 
 	"github.com/pondparinya/go-template/config"
@@ -9,14 +10,15 @@ import (
 
 func main() {
 	log.Println("starting server")
-	// state := flag.String("state", "local", "product state: local/sit/uat/nft/prd")
+	state := flag.String("state", "local", "product state: local/sit/uat/nft/prd")
 	flag.Parse()
 
-	if err := config.Loading("./config", "app-local", "yaml"); err != nil {
+	fileName := fmt.Sprintf("app-%s", *state)
+	if err := config.Load("./config", fileName, "yaml"); err != nil {
 		log.Fatalln(err)
 	}
 
-	if err := config.Loading("./config", "error", "yaml"); err != nil {
+	if err := config.Load("./config", "error", "yaml"); err != nil {
 		log.Fatalln(err)
 	}
 

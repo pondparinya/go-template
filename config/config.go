@@ -1,7 +1,6 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/spf13/viper"
@@ -27,7 +26,7 @@ type (
 var APP Config
 
 // Load config file from given path
-func Loading(path string, fileName string, configType string) error {
+func Load(path string, fileName string, configType string) error {
 	v := viper.New()
 
 	v.AddConfigPath(path)
@@ -36,7 +35,7 @@ func Loading(path string, fileName string, configType string) error {
 
 	if err := v.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			return errors.New("config file not found")
+			return fmt.Errorf("config file not found")
 		}
 	}
 	// Unmarshal the config into the struct
